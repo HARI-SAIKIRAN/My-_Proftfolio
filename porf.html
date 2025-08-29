@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hari Saikiran - Portfolio</title>
+    <style>
+      :root {
+        --bg-dark: #0f0c29;
+        --bg-dark-gradient: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
+        --accent: #ffdf60;
+        --accent-glow: #ffe066;
+        --text-light: #fff;
+        --text-muted: #aaa;
+        --secondary: #ff6b6b;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-light);
+        scroll-behavior: smooth;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      a {
+        text-decoration: none;
+      }
+      header {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--bg-dark-gradient);
+        background-size: 200% 200%;
+        animation: gradientAnimation 15s ease infinite;
+        overflow: hidden;
+      }
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: 20px auto;
+      }
+      .logo {
+        font-weight: bold;
+        font-size: 2em;
+        color: var(--accent);
+        letter-spacing: 1px;
+        text-shadow: 0 0 8px var(--accent-glow);
+        transition: transform 0.3s ease;
+      }
+      .logo:hover {
+        transform: scale(1.05);
+      }
+      .nav-links {
+        display: flex;
+        gap: 25px;
+      }
+      .nav-links a {
+        color: var(--text-light);
+        font-weight: 500;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        left: 0;
+        bottom: -4px;
+        background: var(--accent);
+        transition: width 0.3s ease;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+      }
+      .menu-toggle span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #fff;
+        border-radius: 3px;
+      }
+      .hero {
+        text-align: center;
+        padding: 120px 20px 80px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero h1 {
+        font-size: 3.2em;
+        margin-bottom: 15px;
+        color: var(--text-light);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 1s forwards 0.2s;
+      }
+      .hero h1 .highlight {
+        color: var(--accent);
+        text-shadow: 0 0 4px var(--accent-glow), 0 0 8px var(--accent-glow);
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 2px var(--accent-glow), 0 0 4px var(--accent-glow);
+        }
+        to {
+          text-shadow: 0 0 4px var(--accent-glow), 0 0 8px var(--accent-glow);
+        }
+      }
+      .hero h2 {
+        font-weight: 400;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 1s forwards 0.4s;
+      }
+      .hero p {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        color: #ddd;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 1s forwards 0.6s;
+      }
+      .btn {
+        background: linear-gradient(45deg, var(--accent), var(--secondary));
+        padding: 12px 30px;
+        border: none;
+        border-radius: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #222;
+        transition: all 0.4s ease;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(255, 223, 96, 0.5);
+      }
+      .btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 10px 30px rgba(255, 223, 96, 0.6);
+      }
+      main {
+        padding: 60px 5%;
+        max-width: 1100px;
+        margin: auto;
+      }
+      section {
+        margin-bottom: 80px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+      }
+      section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      section h2 {
+        margin-bottom: 25px;
+        font-size: 2.3em;
+        color: var(--accent);
+        text-align: center;
+        text-shadow: 0 0 5px var(--accent-glow);
+      }
+      .work-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+      }
+      .work-card {
+        background: #1b1b2f;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        transform: translateY(30px);
+        opacity: 0;
+        transition: transform 0.8s ease, opacity 0.8s ease, box-shadow 0.3s ease;
+      }
+      .work-card.visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .work-card img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        transition: transform 0.6s ease;
+      }
+      .work-card h3 {
+        color: var(--accent);
+        margin: 10px 0 8px;
+        font-size: 1.3em;
+      }
+      .work-card p {
+        color: #ccc;
+        font-size: 0.95em;
+      }
+      .work-card:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 12px 40px rgba(255, 223, 96, 0.2);
+      }
+      .work-card:hover img {
+        transform: scale(1.05);
+      }
+      footer {
+        text-align: center;
+        padding: 40px 20px;
+        background: #111;
+        color: var(--text-muted);
+      }
+      footer .footer-details {
+        margin-top: 15px;
+        font-size: 0.95em;
+        line-height: 1.7;
+      }
+      footer a {
+        color: var(--accent);
+        margin: 0 8px;
+        transition: all 0.3s;
+      }
+      footer a:hover {
+        color: var(--secondary);
+        transform: scale(1.05);
+      }
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 850px) {
+        .menu-toggle {
+          display: flex;
+        }
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#home" class="logo">Hari Saikiran</a>
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+          <a href="#about">About</a>
+          <a href="#my-work">My Work</a>
+        </div>
+      </nav>
+      <div class="hero">
+        <h1>Hello, I'm <span class="highlight">Hari Saikiran</span></h1>
+        <h2>Aspiring Graphic Designer & Creative Thinker</h2>
+        <p>
+          Excited to create bold designs, explore new ideas, and bring fresh
+          creativity to every project.
+        </p>
+        <a href="#my-work" class="btn">See My Work</a>
+      </div>
+    </header>
+    <main>
+      <section id="about">
+        <h2>About Me</h2>
+        <p>
+          I am a passionate fresher in graphic design, eager to learn and create
+          visually compelling designs. Skilled in Canva and exploring web/UI
+          design. I love experimenting with colors, layouts, and animations to
+          bring ideas to life.
+        </p>
+      </section>
+      <section id="my-work">
+        <h2>My Work</h2>
+        <div class="work-gallery">
+          <div class="work-card">
+            <img src="air.jpg" alt="Nike Air Force Launch Poster" />
+            <h3>Nike Air Force Launch</h3>
+            <p>
+              Created a stunning sneaker poster focusing on energetic branding,
+              bold typography, and eye-catching color contrast.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="3.png" alt="Air Jordan Promotion" />
+            <h3>Air Jordan Promotion</h3>
+            <p>
+              Designed a limited-time offer graphic for Air Jordan 1,
+              emphasizing repeating text, product focus, and dynamic layout.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="1 copy.png" alt="Student Tribe Community Poster" />
+            <h3>Student Tribe Community Poster</h3>
+            <p>
+              Developed a vibrant community poster for Student Tribe, showcasing
+              energetic text, bold colors, and visual impact for social
+              engagement.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="2.png" alt="Air Force Minimalist Design" />
+            <h3>Air Force Minimalist</h3>
+            <p>
+              Produced a clean sneaker graphic with minimalist style and
+              striking red text to highlight product elegance and simplicity.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="JUST.png" alt="Nike Just Do It Poster" />
+            <h3>Nike Just Do It Poster</h3>
+            <p>
+              Created a motivational Nike sneaker poster with rugged textures,
+              vibrant yellow and brown palette, and bold fonts.
+            </p>
+          </div>
+          <div class="work-card">
+            <img
+              src="Modern Minimalist Lifestyle Tips Instagram Reel Cover.png"
+              alt="Student Tribe - Startup or MNC"
+            />
+            <h3>Student Tribe - Startup or MNC</h3>
+            <p>
+              Designed an engaging social graphic contrasting the world of
+              startups and MNCs for Student Tribe, utilizing icons and a split
+              layout.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="Planet Arcadia.png" alt="Student Tribe Resume Building" />
+            <h3>Student Tribe Resume Building</h3>
+            <p>
+              Produced a bright, informative poster for a resume-building event,
+              making use of bold typography, event details, and action imagery.
+            </p>
+          </div>
+          <div class="work-card">
+            <img
+              src="orange juice poster .png"
+              alt="Citrus Crush Juice Poster"
+            />
+            <h3>Citrus Crush Juice Poster</h3>
+            <p>
+              Crafted a refreshing juice advertisement highlighting vibrant
+              colors and clean layout for maximum product appeal.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="Scary.png" alt="Dodla megha Poster" />
+            <h3>Dodla megha Poster</h3>
+            <p>
+              Designed a stylish monochrome portrait poster with contemporary
+              pastel typography accents for a modern look.
+            </p>
+          </div>
+          <div class="work-card">
+            <img
+              src="STUDENT TRIBE 2.png"
+              alt="Student Tribe Resume Event Poster"
+            />
+            <h3>Student Tribe Resume Event</h3>
+            <p>
+              Created an informative resume-building event poster for Student
+              Tribe using vibrant text elements and clear layout.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="1.jpg" alt="Box Cricket Event Poster 1" />
+            <h3>Box Cricket Event Poster</h3>
+            <p>
+              Designed a bright cricket event poster with playful typography and
+              energized sporting graphics for event promotion.
+            </p>
+          </div>
+          <div class="work-card">
+            <img src="2.jpg" alt="Box Cricket Event Poster 2" />
+            <h3>Box Cricket Event Poster</h3>
+            <p>
+              Created a dynamic sports poster featuring stadium sketches,
+              energetic highlights, and bold event details for a cricket
+              meet-up.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2025 Hari Saikiran. Designed with creativity.</p>
+      <div class="footer-details">
+        📧
+        <a href="mailto:harisaikiran.2006@gmail.com"
+          >harisaikiran.2006@gmail.com</a
+        >
+        | 📱 <a href="tel:08978724590">08978724590</a> <br />
+        | 🔗
+        <a href="www.linkedin.com/in/hari-saikiran-36a828324" target="_blank"
+          >LinkedIn</a
+        >
+        |
+      </div>
+    </footer>
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const navLinks = document.getElementById("nav-links");
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("mobile");
+        navLinks.style.display = navLinks.classList.contains("mobile")
+          ? "flex"
+          : "none";
+      });
+      // Smooth reveal for sections and work cards
+      const sections = document.querySelectorAll("section");
+      const workCards = document.querySelectorAll(".work-card");
+      const reveal = () => {
+        sections.forEach((sec) => {
+          const rect = sec.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) sec.classList.add("visible");
+        });
+        workCards.forEach((card, i) => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100)
+            setTimeout(() => card.classList.add("visible"), i * 150);
+        });
+      };
+      window.addEventListener("scroll", reveal);
+      reveal();
+    </script>
+  </body>
+</html>
